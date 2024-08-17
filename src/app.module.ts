@@ -1,12 +1,19 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
 import { JwtModule } from '@nestjs/jwt';
+import { BarbershopResolver } from './barbershops/barbershop.resolver';
 import { DatabaseModule } from './database/database.module';
 import { DatabaseService } from './database/database.service';
 import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     JwtModule.registerAsync({
@@ -18,6 +25,6 @@ import { PrismaService } from './prisma.service';
     }),
   ],
   controllers: [],
-  providers: [DatabaseService, PrismaService],
+  providers: [DatabaseService, PrismaService, BarbershopResolver],
 })
 export class AppModule {}
