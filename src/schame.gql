@@ -58,9 +58,21 @@ type Mutation {
   updateStatusBarbershop(statusData: StatusInput!): Boolean!
   updateStatusBarber(statusData: StatusInput!): Boolean!
   deleteBarber(id: String!): Boolean!
+  updateServices(serviceData: ServicosUpdate!): Boolean!
 }
 
 input StatusInput {
   status: String!
   id: String!
+}
+
+input ServicosUpdate {
+  id: String!
+  servicos: [ServicosInputType!]!
+}
+
+input ServicosInputType {
+  nomeService: String
+  tempoMedio: Int
+  preco: Int
 }

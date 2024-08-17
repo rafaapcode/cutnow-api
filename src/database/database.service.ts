@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ServicosUpdate } from 'src/barbershops/statusUpdateInput/servicosUpdateInput';
 import { StatusInput } from 'src/barbershops/statusUpdateInput/statusInput';
 import { PrismaService } from 'src/prisma.service';
 
@@ -106,6 +107,24 @@ export class DatabaseService {
       return true;
     } catch (error) {
       console.log(error.message);
+      return false;
+    }
+  }
+
+  async updateService(serviceData: ServicosUpdate): Promise<boolean> {
+    try {
+      await this.prismaService.barbearia.update({
+        where: {
+          id: serviceData.id,
+        },
+        data: {
+          servicos: serviceData.servicos,
+        },
+      });
+
+      return true;
+    } catch (error) {
+      console.log('Database Error: ', error.message);
       return false;
     }
   }

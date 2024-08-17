@@ -3,6 +3,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { Barber } from './models/barber.model';
 import { Barbershop } from './models/barbershop.model';
 import { Servicos } from './models/servicos.model';
+import { ServicosUpdate } from './statusUpdateInput/servicosUpdateInput';
 import { StatusInput } from './statusUpdateInput/statusInput';
 
 @Resolver()
@@ -56,6 +57,15 @@ export class BarbershopResolver {
   @Mutation(() => Boolean)
   async deleteBarber(@Args('id') id: string): Promise<boolean> {
     const barbershops = await this.databaseService.deleteBarber(id);
+
+    return barbershops;
+  }
+
+  @Mutation(() => Boolean)
+  async updateServices(
+    @Args('serviceData') services: ServicosUpdate,
+  ): Promise<boolean> {
+    const barbershops = await this.databaseService.updateService(services);
 
     return barbershops;
   }
