@@ -2,12 +2,12 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Servicos {
-  @Field(() => String!)
+  @Field(() => String, { nullable: true })
   nomeService: string;
 
-  @Field(() => Int!)
+  @Field(() => Int, { nullable: true })
   tempoMedio: number;
 
-  @Field(() => Int!)
+  @Field(() => Int, { nullable: true })
   preco: number;
 }
