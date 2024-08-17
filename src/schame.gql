@@ -1,0 +1,66 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type BarberInfo {
+  portfolio: String
+  banner: String
+  foto: String
+  descricao: String
+}
+
+type Barber {
+  nome: String
+  informacoes: BarberInfo
+}
+
+type Informacoes {
+  cep: String!
+  rua: String!
+  bairro: String!
+  cidade: String!
+  estado: String!
+  numero: Int!
+  horarioAbertura: String!
+  horarioFechamento: String!
+  fotosEstruturaBarbearia: [String]!
+  fotoBanner: String!
+  logo: String!
+  status: String!
+}
+
+type Servicos {
+  nomeService: String
+  tempoMedio: Int
+  preco: Int
+}
+
+type Barbershop {
+  id: String!
+  email: String!
+  nome: String!
+  nomeDaBarbearia: String!
+  cnpj: String!
+  latitude: String!
+  longitude: String!
+  informacoes: Informacoes!
+  servicos: [Servicos]
+  barbeiro: [Barber]
+}
+
+type Query {
+  allBarbers(id: String!): [Barber]
+  barbershopInfo(id: String!): Barbershop!
+  barbershopServices(id: String!): [Servicos]
+}
+
+type Mutation {
+  updateStatusBarbershop(statusData: StatusInput!): Boolean!
+  updateStatusBarber(statusData: StatusInput!): Boolean!
+  deleteBarber(id: String!): Boolean!
+}
+
+input StatusInput {
+  status: String!
+  id: String!
+}

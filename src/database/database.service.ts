@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { StatusInput } from 'src/barbershops/statusUpdateInput/statusInput';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -53,6 +54,59 @@ export class DatabaseService {
     } catch (error) {
       console.log(error.message);
       return null;
+    }
+  }
+
+  async updateStatusOfBarbershop(updatedata: StatusInput): Promise<boolean> {
+    try {
+      await this.prismaService.barbearia.update({
+        where: {
+          id: updatedata.id,
+        },
+        data: {
+          informacoes: {
+            update: { status: updatedata.status },
+          },
+        },
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  }
+
+  async updateStatusOfBarber(updatedata: StatusInput): Promise<boolean> {
+    try {
+      await this.prismaService.barbeiro.update({
+        where: {
+          id: updatedata.id,
+        },
+        data: {
+          status: updatedata.status,
+        },
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  }
+
+  async deleteBarber(id: string): Promise<boolean> {
+    try {
+      await this.prismaService.barbeiro.delete({
+        where: {
+          id,
+        },
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
     }
   }
 }
