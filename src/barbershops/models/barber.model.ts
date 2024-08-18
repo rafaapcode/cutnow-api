@@ -2,7 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { BarberInfo } from './barberInfo.model';
 
 @ObjectType()
-export class Barber {
+export class Barbers {
   @Field(() => String, { nullable: true })
   nome: string;
 

@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { JwtModule } from '@nestjs/jwt';
 import { join } from 'path';
+import { BarberResolver } from './barber/barber.resolver';
 import { BarbershopResolver } from './barbershops/barbershop.resolver';
 import { DatabaseModule } from './database/database.module';
 import { DatabaseService } from './database/database.service';
@@ -29,6 +30,11 @@ import { PrismaService } from './prisma.service';
     }),
   ],
   controllers: [],
-  providers: [DatabaseService, PrismaService, BarbershopResolver],
+  providers: [
+    DatabaseService,
+    PrismaService,
+    BarbershopResolver,
+    BarberResolver,
+  ],
 })
 export class AppModule {}

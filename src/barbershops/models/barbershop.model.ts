@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Barber } from './barber.model';
+import { Barbers } from './barber.model';
 import { Informacoes } from './informacoes.model';
 import { Servicos } from './servicos.model';
 
@@ -32,6 +32,6 @@ export class Barbershop {
   @Field(() => [Servicos], { nullable: 'itemsAndList' })
   servicos: Servicos[];
 
-  @Field(() => [Barber], { nullable: 'itemsAndList' })
-  barbeiro: Barber[];
+  @Field(() => [Barbers], { nullable: 'itemsAndList' })
+  barbeiro: Barbers[];
 }

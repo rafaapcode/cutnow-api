@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { DatabaseService } from 'src/database/database.service';
-import { Barber } from './models/barber.model';
+import { Barbers } from './models/barber.model';
 import { Barbershop } from './models/barbershop.model';
 import { Servicos } from './models/servicos.model';
 import { ServicosUpdate } from './statusUpdateInput/servicosUpdateInput';
@@ -10,10 +10,10 @@ import { StatusInput } from './statusUpdateInput/statusInput';
 export class BarbershopResolver {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  @Query(() => [Barber], { nullable: 'itemsAndList' })
+  @Query(() => [Barbers], { nullable: 'itemsAndList' })
   async allBarbers(
     @Args('id', { type: () => String }) id: string,
-  ): Promise<Barber[] | null> {
+  ): Promise<Barbers[] | null> {
     const barbershops = await this.databaseService.allBarbers(id);
     return barbershops;
   }

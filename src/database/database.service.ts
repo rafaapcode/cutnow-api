@@ -128,4 +128,28 @@ export class DatabaseService {
       return false;
     }
   }
+
+  async barber(id: string): Promise<any> {
+    try {
+      const barber = await this.prismaService.barbeiro.findUnique({
+        where: { id },
+        select: {
+          email: true,
+          cpf: true,
+          nome: true,
+          status: true,
+          informacoes: true,
+        },
+      });
+
+      if (!barber) {
+        return null;
+      }
+
+      return barber;
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
+  }
 }

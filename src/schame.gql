@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type BarberInfo {
+type BarberInformations {
   portfolio: String
   banner: String
   foto: String
@@ -10,6 +10,21 @@ type BarberInfo {
 }
 
 type Barber {
+  nome: String!
+  email: String!
+  cpf: String!
+  status: String!
+  informacoes: BarberInformations
+}
+
+type BarberInfo {
+  portfolio: String
+  banner: String
+  foto: String
+  descricao: String
+}
+
+type Barbers {
   nome: String
   informacoes: BarberInfo
 }
@@ -45,13 +60,14 @@ type Barbershop {
   longitude: String!
   informacoes: Informacoes!
   servicos: [Servicos]
-  barbeiro: [Barber]
+  barbeiro: [Barbers]
 }
 
 type Query {
-  allBarbers(id: String!): [Barber]
+  allBarbers(id: String!): [Barbers]
   barbershopInfo(id: String!): Barbershop!
   barbershopServices(id: String!): [Servicos]
+  barber(id: String!): Barber!
 }
 
 type Mutation {
