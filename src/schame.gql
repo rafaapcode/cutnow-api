@@ -64,9 +64,9 @@ type Barbershop {
 }
 
 type Query {
-  allBarbers(id: String!): [Barbers]
+  allBarbers(id: String!): [Barbers!]!
   barbershopInfo(id: String!): Barbershop!
-  barbershopServices(id: String!): [Servicos]
+  barbershopServices(id: String!): [Servicos!]!
   barber(id: String!): Barber!
 }
 

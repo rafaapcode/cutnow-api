@@ -10,7 +10,7 @@ import { StatusInput } from './statusUpdateInput/statusInput';
 export class BarbershopResolver {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  @Query(() => [Barbers], { nullable: 'itemsAndList' })
+  @Query(() => [Barbers])
   async allBarbers(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Barbers[] | null> {
@@ -18,7 +18,7 @@ export class BarbershopResolver {
     return barbershops;
   }
 
-  @Query(() => Barbershop, { nullable: 'itemsAndList' })
+  @Query(() => Barbershop)
   async barbershopInfo(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Barbershop> {
@@ -26,7 +26,7 @@ export class BarbershopResolver {
     return barbershops;
   }
 
-  @Query(() => [Servicos], { nullable: 'itemsAndList' })
+  @Query(() => [Servicos])
   async barbershopServices(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Servicos[] | null> {

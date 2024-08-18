@@ -6,7 +6,7 @@ import { Barber } from './models/barber.model';
 export class BarberResolver {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  @Query(() => Barber, { nullable: 'itemsAndList' })
+  @Query(() => Barber)
   async barber(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Barber | null> {
