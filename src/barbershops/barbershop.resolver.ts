@@ -18,7 +18,7 @@ export class BarbershopResolver {
     return barbershops;
   }
 
-  @Query(() => Barbershop)
+  @Query(() => Barbershop, { nullable: 'itemsAndList' })
   async barbershopInfo(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Barbershop> {

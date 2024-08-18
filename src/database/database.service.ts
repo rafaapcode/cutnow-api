@@ -31,13 +31,18 @@ export class DatabaseService {
   }
 
   async barbershopInfo(id: string): Promise<any> {
-    const barbershops = await this.prismaService.barbearia.findUnique({
-      where: {
-        id,
-      },
-    });
+    try {
+      const barbershops = await this.prismaService.barbearia.findUnique({
+        where: {
+          id,
+        },
+      });
 
-    return barbershops;
+      return barbershops;
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
   }
 
   async barbershopServices(id: string): Promise<any> {
