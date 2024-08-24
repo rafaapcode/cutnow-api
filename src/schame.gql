@@ -25,6 +25,7 @@ type BarberInfo {
 }
 
 type Barbers {
+  id: String
   nome: String
   informacoes: BarberInfo
 }

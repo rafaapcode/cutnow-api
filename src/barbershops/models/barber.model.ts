@@ -4,6 +4,9 @@ import { BarberInfo } from './barberInfo.model';
 @ObjectType()
 export class Barbers {
   @Field(() => String, { nullable: true })
+  id: string;
+
+  @Field(() => String, { nullable: true })
   nome: string;
 
   @Field(() => BarberInfo, { nullable: true })

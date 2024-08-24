@@ -16,6 +16,7 @@ export class DatabaseService {
         include: {
           barbeiro: {
             select: {
+              id: true,
               nome: true,
               informacoes: true,
             },
