@@ -56,7 +56,6 @@ export class DatabaseService {
           servicos: true,
         },
       });
-
       return barbershops.servicos;
     } catch (error) {
       console.log(error.message);

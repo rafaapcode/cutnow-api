@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { JwtModule } from '@nestjs/jwt';
 import { join } from 'path';
+import { ApiModule } from './api/api.module';
 import { BarberResolver } from './barber/barber.resolver';
 import { BarbershopResolver } from './barbershops/barbershop.resolver';
 import { DatabaseModule } from './database/database.module';
@@ -13,6 +14,7 @@ import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
+    ApiModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), '/src/schame.gql'),
@@ -29,7 +31,6 @@ import { PrismaService } from './prisma.service';
       global: true,
     }),
   ],
-  controllers: [],
   providers: [
     DatabaseService,
     PrismaService,
