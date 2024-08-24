@@ -46,6 +46,39 @@ export class DatabaseService {
     }
   }
 
+  async barbershopInfoToForm(id: string): Promise<any> {
+    try {
+      const barbershops = await this.prismaService.barbearia.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          cnpj: true,
+          email: true,
+          nome: true,
+          nomeDaBarbearia: true,
+          informacoes: {
+            select: {
+              cep: true,
+              bairro: true,
+              cidade: true,
+              estado: true,
+              numero: true,
+              rua: true,
+              horarioAbertura: true,
+              horarioFechamento: true,
+            },
+          },
+        },
+      });
+      const { informacoes, ...results } = barbershops;
+      return { ...results, ...informacoes, numero: `${informacoes.numero}` };
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
+  }
+
   async barbershopServices(id: string): Promise<any> {
     try {
       const barbershops = await this.prismaService.barbearia.findUnique({
