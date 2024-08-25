@@ -194,22 +194,36 @@ export class DatabaseService {
 
   async updateBarberInfo(informations: BarberInfoUpdate): Promise<any> {
     try {
-      // const
+      try {
+        await this.prismaService.$transaction(async (tx) => {
+          const barber = await tx.barbeiro.findUnique({
+            where: { id: informations.id },
+            select: {
+              informacoes: true,
+            },
+          });
+          if (!barber) {
+            return false;
+          }
+          const res = await tx.barbeiro.update({
+            where: { id: informations.id },
+            data: {
+              informacoes: {
+                ...barber.informacoes,
+                ...informations.informations,
+              },
+            },
+          });
 
-      const res = await this.prismaService.barbeiro.update({
-        where: { id: informations.id },
-        data: {
-          informacoes: {
-            ...informations.informations,
-          },
-        },
-      });
-
-      if (!res) {
+          if (!res) {
+            return false;
+          }
+        });
+        return true;
+      } catch (error) {
+        console.log(error.message);
         return false;
       }
-
-      return true;
     } catch (error) {
       console.log(error.message);
       return false;
