@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type BarberInformations {
-  portfolio: String
+  portfolio: [String!]
   banner: String
   foto: String
   descricao: String
@@ -18,7 +18,7 @@ type Barber {
 }
 
 type BarberInfo {
-  portfolio: String
+  portfolio: [String!]
   banner: String
   foto: String
   descricao: String
@@ -76,6 +76,7 @@ type Mutation {
   updateStatusBarber(statusData: StatusInput!): Boolean!
   deleteBarber(id: String!): Boolean!
   updateServices(serviceData: ServicosUpdate!): Boolean!
+  updateInfoBarber(informations: BarberInfoUpdate!): Boolean!
 }
 
 input StatusInput {
@@ -92,4 +93,16 @@ input ServicosInputType {
   nomeService: String
   tempoMedio: Int
   preco: Int
+}
+
+input BarberInfoUpdate {
+  id: String!
+  informations: BarberInformationsUpdate!
+}
+
+input BarberInformationsUpdate {
+  portfolio: [String!]
+  banner: String
+  foto: String
+  descricao: String
 }
