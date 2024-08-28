@@ -1,11 +1,17 @@
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { JwtModule } from '@nestjs/jwt';
 import { join } from 'path';
 import { ApiModule } from './api/api.module';
+import { AuthMiddlware } from './authMiddleware';
 import { BarberResolver } from './barber/barber.resolver';
 import { BarbershopResolver } from './barbershops/barbershop.resolver';
 import { DatabaseModule } from './database/database.module';
@@ -38,4 +44,10 @@ import { PrismaService } from './prisma.service';
     BarberResolver,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddlware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
