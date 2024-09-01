@@ -48,6 +48,6 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddlware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
+      .exclude({ path: '/graphql', method: RequestMethod.ALL });
   }
 }
