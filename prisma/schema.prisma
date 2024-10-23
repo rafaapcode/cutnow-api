@@ -9,18 +9,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  email        String         @unique @db.String
+  nome         String         @db.String
+  primeiroNome String         @db.String
+  sobreNome    String         @db.String
+  avatar       String         @db.String
+  cpf          String?        @db.String
+  solicitacoes Solicitacoes[]
+  Agendamentos Agendamentos[]
+}
+
 model Barbearia {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
-  email           String        @unique @db.String
-  senha           String        @db.String
-  nome            String        @db.String
-  nomeDaBarbearia String        @unique @db.String
-  cnpj            String        @db.String
-  latitude        String        @db.String
-  longitude       String        @db.String
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  email           String         @unique @db.String
+  senha           String         @db.String
+  nome            String         @db.String
+  nomeDaBarbearia String         @unique @db.String
+  cnpj            String         @unique @db.String
+  latitude        String         @db.String
+  longitude       String         @db.String
   informacoes     InfoBarbearia
   servicos        Servicos[]
   barbeiro        Barbeiro[]
+  solicitacoes    Solicitacoes[]
+  Agendamentos    Agendamentos[]
 
   @@fulltext([email, latitude, longitude, nomeDaBarbearia])
 }
@@ -47,15 +61,52 @@ type Servicos {
 }
 
 model Barbeiro {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  email        String        @unique @db.String
-  nome         String        @db.String
-  senha        String        @db.String
-  cpf          String        @unique @db.String
-  status       String        @default("Indisponível") @db.String
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  email        String         @unique @db.String
+  nome         String         @db.String
+  senha        String         @db.String
+  cpf          String         @unique @db.String
+  status       String         @default("Indisponível") @db.String
   informacoes  InfoBarbeiro?
-  barbearia_id String        @db.ObjectId
-  barbearia    Barbearia     @relation(fields: [barbearia_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  barbearia_id String         @db.ObjectId
+  barbearia    Barbearia      @relation(fields: [barbearia_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  solicitacoes Solicitacoes[]
+  Agendamentos Agendamentos[]
+}
+
+model Solicitacoes {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  tipoServico String  @db.String
+  nomeCliente String  @db.String
+  data        String  @db.String
+  visualizado Boolean @default(false)
+
+  emailCliente String @unique @db.String
+  usuario      User   @relation(fields: [emailCliente], references: [email], onDelete: Cascade, onUpdate: Cascade)
+
+  barbearia_id String    @db.ObjectId
+  barbearia    Barbearia @relation(fields: [barbearia_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  barbeiro_id String   @db.ObjectId
+  barbeiro    Barbeiro @relation(fields: [barbeiro_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Agendamentos {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  tipoServico String @db.String
+  nomeCliente String @db.String
+  data        String @db.String
+
+  emailCliente String @unique @db.String
+  usuario      User   @relation(fields: [emailCliente], references: [email], onDelete: Cascade, onUpdate: Cascade)
+
+  barbearia_id String    @db.ObjectId
+  barbearia    Barbearia @relation(fields: [barbearia_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  barbeiro_id String   @db.ObjectId
+  barbeiro    Barbeiro @relation(fields: [barbeiro_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@fulltext([data, barbeiro_id])
 }
 
 type InfoBarbeiro {
