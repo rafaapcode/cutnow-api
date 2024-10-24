@@ -229,4 +229,28 @@ export class DatabaseService {
       return false;
     }
   }
+
+  async getAllRequests(
+    id: string,
+  ): Promise<{ error: boolean; message: string; data?: any }> {
+    try {
+      const requests = await this.prismaService.solicitacoes.findMany({
+        where: {
+          barbeiro_id: id,
+        },
+      });
+
+      return {
+        error: false,
+        message: 'Solicitações encontradas',
+        data: requests,
+      };
+    } catch (error: any) {
+      console.log(error.message);
+      return {
+        error: true,
+        message: error.message,
+      };
+    }
+  }
 }
