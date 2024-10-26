@@ -1,6 +1,7 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { DatabaseService } from 'src/database/database.service';
 import { Request } from './models/request.model';
+import { CreateSchedule } from './requestInputs/CreateSchedule';
 
 @Resolver()
 export class RequestResolver {
@@ -14,23 +15,22 @@ export class RequestResolver {
     return requests;
   }
 
-  // @Mutation(() => Boolean)
-  // async updateStatusBarbershop(
-  //   @Args('statusData') statusData: StatusInput,
-  // ): Promise<boolean> {
-  //   const barbershops =
-  //     await this.databaseService.updateStatusOfBarbershop(statusData);
+  @Mutation(() => Boolean)
+  async updateStatusBarbershop(
+    @Args('newSchedule') scheduleData: CreateSchedule,
+  ): Promise<boolean> {
+    const newSchedules =
+      await this.databaseService.createNewSchedule(scheduleData);
 
-  //   return barbershops;
-  // }
+    return newSchedules;
+  }
 
-  // @Mutation(() => Boolean)
-  // async updateStatusBarber(
-  //   @Args('statusData') statusData: StatusInput,
-  // ): Promise<boolean> {
-  //   const barbershops =
-  //     await this.databaseService.updateStatusOfBarber(statusData);
+  @Mutation(() => Boolean)
+  async updateStatusBarber(
+    @Args('requestId') requestId: string,
+  ): Promise<boolean> {
+    const deletedRequest = await this.databaseService.deleteRequest(requestId);
 
-  //   return barbershops;
-  // }
+    return deletedRequest;
+  }
 }

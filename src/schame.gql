@@ -64,24 +64,41 @@ type Barbershop {
   barbeiro: [Barbers]
 }
 
+type Request {
+  id: String
+  tipoServico: String
+  nomeCliente: String
+  data: String
+  visualizado: Boolean
+  emailCliente: String
+  barbearia_id: String
+  barbeiro_id: String
+}
+
 type Query {
-  allBarbers(id: String!): [Barbers!]!
+  allBarbers(barbeiroId: String!): [Request!]!
   barbershopInfo(id: String!): Barbershop!
   barbershopServices(id: String!): [Servicos!]!
   barber(id: String!): Barber!
 }
 
 type Mutation {
-  updateStatusBarbershop(statusData: StatusInput!): Boolean!
-  updateStatusBarber(statusData: StatusInput!): Boolean!
+  updateStatusBarbershop(newSchedule: CreateSchedule!): Boolean!
+  updateStatusBarber(requestId: String!): Boolean!
   deleteBarber(id: String!): Boolean!
   updateServices(serviceData: ServicosUpdate!): Boolean!
   updateInfoBarber(informations: BarberInfoUpdate!): Boolean!
 }
 
-input StatusInput {
-  status: String!
-  id: String!
+input CreateSchedule {
+  requestId: String
+  tipoServico: String
+  nomeCliente: String
+  data: String
+  visualizado: Boolean
+  emailCliente: String
+  barbearia_id: String
+  barbeiro_id: String
 }
 
 input ServicosUpdate {

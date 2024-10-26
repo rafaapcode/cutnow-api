@@ -1,7 +1,10 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateRequest {
+export class CreateSchedule {
+  @Field(() => String, { nullable: true })
+  requestId: string;
+
   @Field(() => String, { nullable: true })
   tipoServico: string;
 

@@ -3,6 +3,7 @@ import { BarberInfoUpdate } from 'src/barber/input/updateinfoInput';
 import { ServicosUpdate } from 'src/barbershops/statusUpdateInput/servicosUpdateInput';
 import { StatusInput } from 'src/barbershops/statusUpdateInput/statusInput';
 import { PrismaService } from 'src/prisma.service';
+import { CreateSchedule } from 'src/requests/requestInputs/CreateSchedule';
 
 @Injectable()
 export class DatabaseService {
@@ -251,6 +252,54 @@ export class DatabaseService {
         error: true,
         message: error.message,
       };
+    }
+  }
+
+  async createNewSchedule(scheduleData: CreateSchedule): Promise<boolean> {
+    try {
+      const { requestId, ...info } = scheduleData;
+      const queries = [];
+      await this.prismaService.$transaction(async (tx) => {
+        const createSchedule = tx.agendamentos.create({
+          data: info,
+        });
+        const deleteRequest = tx.solicitacoes.delete({
+          where: {
+            id: requestId,
+          },
+        });
+
+        queries.push(createSchedule);
+        queries.push(deleteRequest);
+      });
+
+      await Promise.all(queries);
+
+      return true;
+    } catch (error: any) {
+      console.log(error.message);
+      return false;
+    }
+  }
+
+  async deleteRequest(requestId: string): Promise<boolean> {
+    try {
+      const request = await this.prismaService.solicitacoes.findUnique({
+        where: { id: requestId },
+      });
+
+      if (!request) {
+        return false;
+      }
+
+      await this.prismaService.solicitacoes.delete({
+        where: { id: requestId },
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
     }
   }
 }
