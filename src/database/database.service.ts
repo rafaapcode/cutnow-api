@@ -231,15 +231,20 @@ export class DatabaseService {
     }
   }
 
-  async getAllRequests(
-    id: string,
-  ): Promise<{ error: boolean; message: string; data?: any }> {
+  async getAllRequests(id: string): Promise<any> {
     try {
       const requests = await this.prismaService.solicitacoes.findMany({
         where: {
           barbeiro_id: id,
         },
       });
+      if (!requests) {
+        return {
+          error: true,
+          message: 'Nenhuma requisição encontrada',
+          data: undefined,
+        };
+      }
 
       return {
         error: false,
@@ -251,6 +256,7 @@ export class DatabaseService {
       return {
         error: true,
         message: error.message,
+        data: undefined,
       };
     }
   }
@@ -263,6 +269,17 @@ export class DatabaseService {
         const createSchedule = tx.agendamentos.create({
           data: info,
         });
+
+        const request = await tx.solicitacoes.findUnique({
+          where: {
+            id: requestId,
+          },
+        });
+
+        if (!request) {
+          return false;
+        }
+
         const deleteRequest = tx.solicitacoes.delete({
           where: {
             id: requestId,

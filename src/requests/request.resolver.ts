@@ -8,15 +8,15 @@ export class RequestResolver {
   constructor(private readonly databaseService: DatabaseService) {}
 
   @Query(() => [Request])
-  async allBarbers(
+  async allRequests(
     @Args('barbeiroId', { type: () => String }) id: string,
-  ): Promise<{ error: boolean; message: string; data?: any } | null> {
+  ): Promise<Request[] | null> {
     const requests = await this.databaseService.getAllRequests(id);
-    return requests;
+    return requests.data;
   }
 
   @Mutation(() => Boolean)
-  async updateStatusBarbershop(
+  async createNewSchedule(
     @Args('newSchedule') scheduleData: CreateSchedule,
   ): Promise<boolean> {
     const newSchedules =
@@ -26,9 +26,7 @@ export class RequestResolver {
   }
 
   @Mutation(() => Boolean)
-  async updateStatusBarber(
-    @Args('requestId') requestId: string,
-  ): Promise<boolean> {
+  async deleteRequest(@Args('requestId') requestId: string): Promise<boolean> {
     const deletedRequest = await this.databaseService.deleteRequest(requestId);
 
     return deletedRequest;

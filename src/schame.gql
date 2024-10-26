@@ -76,29 +76,26 @@ type Request {
 }
 
 type Query {
-  allBarbers(barbeiroId: String!): [Request!]!
+  allBarbers(id: String!): [Barbers!]!
   barbershopInfo(id: String!): Barbershop!
   barbershopServices(id: String!): [Servicos!]!
   barber(id: String!): Barber!
+  allRequests(barbeiroId: String!): [Request!]!
 }
 
 type Mutation {
-  updateStatusBarbershop(newSchedule: CreateSchedule!): Boolean!
-  updateStatusBarber(requestId: String!): Boolean!
+  updateStatusBarbershop(statusData: StatusInput!): Boolean!
+  updateStatusBarber(statusData: StatusInput!): Boolean!
   deleteBarber(id: String!): Boolean!
   updateServices(serviceData: ServicosUpdate!): Boolean!
   updateInfoBarber(informations: BarberInfoUpdate!): Boolean!
+  createNewSchedule(newSchedule: CreateSchedule!): Boolean!
+  deleteRequest(requestId: String!): Boolean!
 }
 
-input CreateSchedule {
-  requestId: String
-  tipoServico: String
-  nomeCliente: String
-  data: String
-  visualizado: Boolean
-  emailCliente: String
-  barbearia_id: String
-  barbeiro_id: String
+input StatusInput {
+  status: String!
+  id: String!
 }
 
 input ServicosUpdate {
@@ -122,4 +119,15 @@ input BarberInformationsUpdate {
   banner: String
   foto: String
   descricao: String
+}
+
+input CreateSchedule {
+  requestId: String
+  tipoServico: String
+  nomeCliente: String
+  data: String
+  visualizado: Boolean
+  emailCliente: String
+  barbearia_id: String
+  barbeiro_id: String
 }
