@@ -237,6 +237,13 @@ export class DatabaseService {
         where: {
           barbeiro_id: id,
         },
+        include: {
+          usuario: {
+            select: {
+              avatar: true,
+            },
+          },
+        },
       });
       if (!requests) {
         return {
@@ -246,10 +253,14 @@ export class DatabaseService {
         };
       }
 
+      const newRequests = requests.map(({ usuario: { avatar }, ...info }) => ({
+        avatar,
+        ...info,
+      }));
       return {
         error: false,
         message: 'Solicitações encontradas',
-        data: requests,
+        data: newRequests,
       };
     } catch (error: any) {
       console.log(error.message);

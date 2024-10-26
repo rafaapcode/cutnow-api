@@ -73,6 +73,7 @@ type Request {
   emailCliente: String
   barbearia_id: String
   barbeiro_id: String
+  avatar: String
 }
 
 type Query {

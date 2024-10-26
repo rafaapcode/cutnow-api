@@ -25,4 +25,7 @@ export class Request {
 
   @Field(() => String, { nullable: true })
   barbeiro_id: string;
+
+  @Field(() => String, { nullable: true })
+  avatar: string;
 }
