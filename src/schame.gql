@@ -127,7 +127,6 @@ input CreateSchedule {
   tipoServico: String
   nomeCliente: String
   data: String
-  visualizado: Boolean
   emailCliente: String
   barbearia_id: String
   barbeiro_id: String
