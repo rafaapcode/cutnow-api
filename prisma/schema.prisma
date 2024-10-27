@@ -81,7 +81,7 @@ model Solicitacoes {
   data        String  @db.String
   visualizado Boolean @default(false)
 
-  emailCliente String @unique @db.String
+  emailCliente String @db.String
   usuario      User   @relation(fields: [emailCliente], references: [email], onDelete: Cascade, onUpdate: Cascade)
 
   barbearia_id String    @db.ObjectId
@@ -97,7 +97,7 @@ model Agendamentos {
   nomeCliente String @db.String
   data        String @db.String
 
-  emailCliente String @unique @db.String
+  emailCliente String @db.String
   usuario      User   @relation(fields: [emailCliente], references: [email], onDelete: Cascade, onUpdate: Cascade)
 
   barbearia_id String    @db.ObjectId
