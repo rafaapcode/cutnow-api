@@ -277,10 +277,6 @@ export class DatabaseService {
       const { requestId, ...info } = scheduleData;
       const queries = [];
       await this.prismaService.$transaction(async (tx) => {
-        const createSchedule = tx.agendamentos.create({
-          data: info,
-        });
-
         const request = await tx.solicitacoes.findUnique({
           where: {
             id: requestId,
@@ -290,6 +286,10 @@ export class DatabaseService {
         if (!request) {
           return false;
         }
+
+        const createSchedule = tx.agendamentos.create({
+          data: info,
+        });
 
         const deleteRequest = tx.solicitacoes.delete({
           where: {

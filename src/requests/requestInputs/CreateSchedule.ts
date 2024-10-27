@@ -14,9 +14,6 @@ export class CreateSchedule {
   @Field(() => String, { nullable: true })
   data: string;
 
-  @Field(() => Boolean, { nullable: true })
-  visualizado: boolean;
-
   @Field(() => String, { nullable: true })
   emailCliente: string;
 
