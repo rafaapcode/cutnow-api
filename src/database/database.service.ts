@@ -206,12 +206,17 @@ export class DatabaseService {
           if (!barber) {
             return false;
           }
+          const updateDate = {
+            ...barber.informacoes,
+            ...informations.informations,
+            portfolio: barber.informacoes.portfolio || [''],
+          };
+          console.log(updateDate);
           const res = await tx.barbeiro.update({
             where: { id: informations.id },
             data: {
               informacoes: {
-                ...barber.informacoes,
-                ...informations.informations,
+                ...updateDate,
               },
             },
           });
