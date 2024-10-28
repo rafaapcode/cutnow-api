@@ -11,9 +11,6 @@ export class Schedules {
   @Field(() => String, { nullable: true })
   nomeCliente: string;
 
-  @Field(() => [Number], { nullable: true })
-  tempoMedio: number[];
-
   @Field(() => String, { nullable: true })
   data: string;
 

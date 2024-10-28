@@ -351,15 +351,6 @@ export class DatabaseService {
               nome: true,
             },
           },
-          barbearia: {
-            select: {
-              servicos: {
-                select: {
-                  tempoMedio: true,
-                },
-              },
-            },
-          },
         },
       });
 
@@ -380,7 +371,6 @@ export class DatabaseService {
           barbearia_id: schedule.barbearia_id,
           barbeiro_id: schedule.barbeiro_id,
           nomeBarbeiro: schedule.barbeiro.nome,
-          tempoMedio: schedule.barbearia.servicos,
         };
       });
 
@@ -417,15 +407,6 @@ export class DatabaseService {
               nome: true,
             },
           },
-          barbearia: {
-            select: {
-              servicos: {
-                select: {
-                  tempoMedio: true,
-                },
-              },
-            },
-          },
         },
       });
 
@@ -446,7 +427,6 @@ export class DatabaseService {
           barbearia_id: schedule.barbearia_id,
           barbeiro_id: schedule.barbeiro_id,
           nomeBarbeiro: schedule.barbeiro.nome,
-          tempoMedio: schedule.barbearia.servicos,
         };
       });
 

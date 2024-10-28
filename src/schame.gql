@@ -80,7 +80,6 @@ type Schedules {
   id: String
   tipoServico: String
   nomeCliente: String
-  tempoMedio: [Float!]
   data: String
   nomeBarbeiro: String
   barbearia_id: String
