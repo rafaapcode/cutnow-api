@@ -332,4 +332,286 @@ export class DatabaseService {
       return false;
     }
   }
+
+  async allScheduleOfBarbershop(barbershopId: string): Promise<any> {
+    try {
+      const schedules = await this.prismaService.agendamentos.findMany({
+        where: {
+          barbearia_id: barbershopId,
+        },
+        select: {
+          id: true,
+          tipoServico: true,
+          nomeCliente: true,
+          data: true,
+          barbearia_id: true,
+          barbeiro_id: true,
+          barbeiro: {
+            select: {
+              nome: true,
+            },
+          },
+          barbearia: {
+            select: {
+              servicos: {
+                select: {
+                  tempoMedio: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!schedules) {
+        return {
+          error: true,
+          message: 'Nenhum agendamento encontrado',
+          data: null,
+        };
+      }
+
+      const allSchedules = schedules.map((schedule) => {
+        return {
+          id: schedule.id,
+          tipoServico: schedule.tipoServico,
+          nomeCliente: schedule.nomeCliente,
+          data: schedule.data,
+          barbearia_id: schedule.barbearia_id,
+          barbeiro_id: schedule.barbeiro_id,
+          nomeBarbeiro: schedule.barbeiro.nome,
+          tempoMedio: schedule.barbearia.servicos,
+        };
+      });
+
+      return {
+        error: false,
+        message: 'Todos os agendamentos',
+        data: allSchedules,
+      };
+    } catch (error: any) {
+      console.log(error.message);
+      return {
+        error: true,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
+
+  async allScheduleOfBarber(barberId: string): Promise<any> {
+    try {
+      const schedules = await this.prismaService.agendamentos.findMany({
+        where: {
+          barbeiro_id: barberId,
+        },
+        select: {
+          id: true,
+          tipoServico: true,
+          nomeCliente: true,
+          data: true,
+          barbearia_id: true,
+          barbeiro_id: true,
+          barbeiro: {
+            select: {
+              nome: true,
+            },
+          },
+          barbearia: {
+            select: {
+              servicos: {
+                select: {
+                  tempoMedio: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!schedules) {
+        return {
+          error: true,
+          message: 'Nenhum agendamento encontrado',
+          data: null,
+        };
+      }
+
+      const allSchedules = schedules.map((schedule) => {
+        return {
+          id: schedule.id,
+          tipoServico: schedule.tipoServico,
+          nomeCliente: schedule.nomeCliente,
+          data: schedule.data,
+          barbearia_id: schedule.barbearia_id,
+          barbeiro_id: schedule.barbeiro_id,
+          nomeBarbeiro: schedule.barbeiro.nome,
+          tempoMedio: schedule.barbearia.servicos,
+        };
+      });
+
+      return {
+        error: false,
+        message: 'Todos os agendamentos',
+        data: allSchedules,
+      };
+    } catch (error: any) {
+      console.log(error.message);
+      return {
+        error: true,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
+
+  async allSchedulesOfTodayToBarbershop(barbershopId: string): Promise<any> {
+    try {
+      const schedules = await this.prismaService.agendamentos.findMany({
+        where: {
+          AND: [
+            {
+              barbearia_id: barbershopId,
+            },
+            {
+              data: {
+                contains: new Date(Date.now()).toISOString().split('T')[0],
+              },
+            },
+          ],
+        },
+        select: {
+          id: true,
+          tipoServico: true,
+          nomeCliente: true,
+          data: true,
+          barbearia_id: true,
+          barbeiro_id: true,
+          usuario: {
+            select: {
+              avatar: true,
+            },
+          },
+          barbeiro: {
+            select: {
+              informacoes: {
+                select: {
+                  foto: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!schedules) {
+        return {
+          error: true,
+          message: 'Nenhum agendamento encontrado',
+          data: null,
+        };
+      }
+
+      const allSchedulesOfBarbershop = schedules.map((schedule) => {
+        return {
+          id: schedule.id,
+          tipoServico: schedule.tipoServico,
+          nomeCliente: schedule.nomeCliente,
+          data: schedule.data,
+          barbearia_id: schedule.barbearia_id,
+          barbeiro_id: schedule.barbeiro_id,
+          clientAvatar: schedule.usuario.avatar,
+          barberAvatar: schedule.barbeiro.informacoes.foto,
+        };
+      });
+
+      return {
+        error: false,
+        message: 'Agendamentos encontrados',
+        data: allSchedulesOfBarbershop,
+      };
+    } catch (error: any) {
+      console.log(error.message);
+      return {
+        error: true,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
+
+  async allSchedulesOfTodayToBarber(barberId: string): Promise<any> {
+    try {
+      const schedules = await this.prismaService.agendamentos.findMany({
+        where: {
+          AND: [
+            {
+              barbeiro_id: barberId,
+            },
+            {
+              data: {
+                contains: new Date(Date.now()).toISOString().split('T')[0],
+              },
+            },
+          ],
+        },
+        select: {
+          id: true,
+          tipoServico: true,
+          nomeCliente: true,
+          data: true,
+          barbearia_id: true,
+          barbeiro_id: true,
+          usuario: {
+            select: {
+              avatar: true,
+            },
+          },
+          barbeiro: {
+            select: {
+              informacoes: {
+                select: {
+                  foto: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!schedules) {
+        return {
+          error: true,
+          message: 'Nenhum agendamento encontrado',
+          data: null,
+        };
+      }
+
+      const allSchedulesOfBarber = schedules.map((schedule) => {
+        return {
+          id: schedule.id,
+          tipoServico: schedule.tipoServico,
+          nomeCliente: schedule.nomeCliente,
+          data: schedule.data,
+          barbearia_id: schedule.barbearia_id,
+          barbeiro_id: schedule.barbeiro_id,
+          clientAvatar: schedule.usuario.avatar,
+          barberAvatar: schedule.barbeiro.informacoes.foto,
+        };
+      });
+
+      return {
+        error: false,
+        message: 'Agendamentos encontrados',
+        data: allSchedulesOfBarber,
+      };
+    } catch (error: any) {
+      console.log(error.message);
+      return {
+        error: true,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
 }

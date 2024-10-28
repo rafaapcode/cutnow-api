@@ -76,12 +76,38 @@ type Request {
   avatar: String
 }
 
+type Schedules {
+  id: String
+  tipoServico: String
+  nomeCliente: String
+  tempoMedio: [Float!]
+  data: String
+  nomeBarbeiro: String
+  barbearia_id: String
+  barbeiro_id: String
+}
+
+type SchedulesOfToday {
+  id: String
+  tipoServico: String
+  nomeCliente: String
+  data: String
+  barbearia_id: String
+  barbeiro_id: String
+  clientAvatar: String
+  barberAvatar: String
+}
+
 type Query {
   allBarbers(id: String!): [Barbers!]!
   barbershopInfo(id: String!): Barbershop!
   barbershopServices(id: String!): [Servicos!]!
   barber(id: String!): Barber!
   allRequests(barbeiroId: String!): [Request!]!
+  allSchedulesOfBarbershop(barbeariaId: String!): [Schedules!]!
+  allSchedulesOfBarber(barbeiroId: String!): [Schedules!]!
+  allSchedulesOfTodayToBarbershop(barbeariaId: String!): [SchedulesOfToday!]!
+  allSchedulesOfTodayToBarber(barbeiroId: String!): [SchedulesOfToday!]!
 }
 
 type Mutation {

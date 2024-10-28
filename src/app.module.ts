@@ -18,6 +18,7 @@ import { DatabaseModule } from './database/database.module';
 import { DatabaseService } from './database/database.service';
 import { PrismaService } from './prisma.service';
 import { RequestResolver } from './requests/request.resolver';
+import { ScheduleResolver } from './schedules/schedule.resolver';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { RequestResolver } from './requests/request.resolver';
     BarbershopResolver,
     BarberResolver,
     RequestResolver,
+    ScheduleResolver,
   ],
 })
 export class AppModule implements NestModule {
