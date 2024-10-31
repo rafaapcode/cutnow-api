@@ -16,8 +16,6 @@ import { BarberResolver } from './barber/barber.resolver';
 import { BarbershopResolver } from './barbershops/barbershop.resolver';
 import { DatabaseModule } from './database/database.module';
 import { DatabaseService } from './database/database.service';
-import { GoogleCalendarModule } from './google-calendar/google-calendar.module';
-import { GoogleCalendarService } from './google-calendar/google-calendar.service';
 import { PrismaService } from './prisma.service';
 import { RequestResolver } from './requests/request.resolver';
 import { ScheduleResolver } from './schedules/schedule.resolver';
@@ -33,7 +31,6 @@ import { ScheduleResolver } from './schedules/schedule.resolver';
     }),
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
-    GoogleCalendarModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -41,7 +38,6 @@ import { ScheduleResolver } from './schedules/schedule.resolver';
       }),
       global: true,
     }),
-    GoogleCalendarModule,
   ],
   providers: [
     DatabaseService,
@@ -50,7 +46,6 @@ import { ScheduleResolver } from './schedules/schedule.resolver';
     BarberResolver,
     RequestResolver,
     ScheduleResolver,
-    GoogleCalendarService,
   ],
 })
 export class AppModule implements NestModule {
