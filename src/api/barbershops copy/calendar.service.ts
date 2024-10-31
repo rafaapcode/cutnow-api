@@ -16,7 +16,6 @@ export class CalendarService {
         console.log(url);
         throw new InternalServerErrorException('Erro ao gerar a URL');
       }
-
       return url.url;
     } catch (error) {
       console.log(error.message);
