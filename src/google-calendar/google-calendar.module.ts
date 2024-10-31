@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { GoogleCalendarService } from './google-calendar.service';
 
 @Module({
-  imports: [PrismaService],
+  providers: [PrismaService, GoogleCalendarService],
   exports: [GoogleCalendarService],
 })
 export class GoogleCalendarModule {}

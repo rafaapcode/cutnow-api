@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { google } from 'googleapis';
 import { PrismaService } from 'src/prisma.service';
@@ -148,6 +148,43 @@ export class GoogleCalendarService {
         error: true,
         message: error.message,
       };
+    }
+  }
+
+  async calendarIsSynchronize(
+    emailUser: string,
+    role: string,
+  ): Promise<boolean> {
+    try {
+      let isSynchronize = false;
+      if (role === 'barbershop') {
+        const userCalendar = await this.prisma.barbearia.findFirst({
+          where: { email: emailUser },
+          select: {
+            sinchronizeCalendar: true,
+          },
+        });
+
+        if (userCalendar.sinchronizeCalendar) {
+          isSynchronize = userCalendar.sinchronizeCalendar;
+        }
+      } else {
+        const userCalendar = await this.prisma.barbeiro.findFirst({
+          where: { email: emailUser },
+          select: {
+            sinchronizeCalendar: true,
+          },
+        });
+
+        if (userCalendar.sinchronizeCalendar) {
+          isSynchronize = userCalendar.sinchronizeCalendar;
+        }
+      }
+
+      return isSynchronize;
+    } catch (error) {
+      console.log(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 
