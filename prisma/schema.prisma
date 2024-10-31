@@ -22,19 +22,21 @@ model User {
 }
 
 model Barbearia {
-  id              String         @id @default(auto()) @map("_id") @db.ObjectId
-  email           String         @unique @db.String
-  senha           String         @db.String
-  nome            String         @db.String
-  nomeDaBarbearia String         @unique @db.String
-  cnpj            String         @unique @db.String
-  latitude        String         @db.String
-  longitude       String         @db.String
-  informacoes     InfoBarbearia
-  servicos        Servicos[]
-  barbeiro        Barbeiro[]
-  solicitacoes    Solicitacoes[]
-  Agendamentos    Agendamentos[]
+  id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+  email               String         @unique @db.String
+  senha               String         @db.String
+  nome                String         @db.String
+  nomeDaBarbearia     String         @unique @db.String
+  cnpj                String         @unique @db.String
+  latitude            String         @db.String
+  longitude           String         @db.String
+  sinchronizeCalendar Boolean        @default(false)
+  calendarId          String?        @db.String
+  informacoes         InfoBarbearia
+  servicos            Servicos[]
+  barbeiro            Barbeiro[]
+  solicitacoes        Solicitacoes[]
+  Agendamentos        Agendamentos[]
 
   @@fulltext([email, latitude, longitude, nomeDaBarbearia])
 }
@@ -61,17 +63,19 @@ type Servicos {
 }
 
 model Barbeiro {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
-  email        String         @unique @db.String
-  nome         String         @db.String
-  senha        String         @db.String
-  cpf          String         @unique @db.String
-  status       String         @default("Indisponível") @db.String
-  informacoes  InfoBarbeiro?
-  barbearia_id String         @db.ObjectId
-  barbearia    Barbearia      @relation(fields: [barbearia_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  solicitacoes Solicitacoes[]
-  Agendamentos Agendamentos[]
+  id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+  email               String         @unique @db.String
+  nome                String         @db.String
+  senha               String         @db.String
+  cpf                 String         @unique @db.String
+  status              String         @default("Indisponível") @db.String
+  sinchronizeCalendar Boolean        @default(false)
+  calendarId          String?        @db.String
+  informacoes         InfoBarbeiro?
+  barbearia_id        String         @db.ObjectId
+  barbearia           Barbearia      @relation(fields: [barbearia_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  solicitacoes        Solicitacoes[]
+  Agendamentos        Agendamentos[]
 }
 
 model Solicitacoes {
